@@ -3,15 +3,20 @@
 <head>
 <meta charset=utf-8 />  
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="screen.css" />
-  <link href="http://www.unhcr.org/favicon.ico" rel="icon" type="image/x-icon">
-
+<link href="http://www.unhcr.org/favicon.ico" rel="icon" type="image/x-icon">
 <title>UNHCR Community Impact  and Quick Impact Projects in Jordan</title>
+
   <script src='js/mapbox.js'></script>
   <link href='js/mapbox.css' rel='stylesheet' />
   <!--[if lte IE 8]>
     <link href='js/mapbox.ie.css' rel='stylesheet'>
   <![endif]-->
+  
+  
+  <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script src="js/csv2geojson.js"></script>
+  
   <style>
         body {
             padding: 0;
@@ -92,13 +97,15 @@
 <![endif]-->
 <script src="js/leaflet.markercluster.js"></script>
 
-
-    <!-- Labelling CSS and JS -->
-    <link rel="stylesheet" href="js/leaflet.label.css" />
-    <script src="js/leaflet.label.js"></script>
+<!-- Labelling CSS and JS -->
+<link rel="stylesheet" href="js/leaflet.label.css" />
+<script src="js/leaflet.label.js"></script>
 
 <!-- Example data. -->
 <script src="data/level4.js"></script>
+
+
+
 
 <div id='map'></div>
 
@@ -120,8 +127,6 @@
         </tr>
     </table>
 </div>
-    
-
 <script type='text/javascript'>
     var map = L.mapbox.map('map', 'unhcr.map-8bkai3wa')
     
@@ -137,46 +142,21 @@
             */
             title: title
         });
-        
-        /*
-        var popupContent =  '<a target="_blank" class="popup" href="' + feature.properties.url + '">' +
-                            '<img src="' + feature.properties.image + '">' +
-                        '   <h2>' + feature.properties.city + '</h2>' +
-                        '</a>';
-        
-        marker.bindPopup(popupContent,{
-            closeButton: false,
-            minWidth: 320
-        });                
-
-        
-        marker.bindPopup(title);
-        */        
-
         var popupContent =  '<a target="_blank" class="popup" href="' + title + '">' +
                         '   <h2>' + title + '</h2>' +
                         '</a>';
-        
+
         marker.bindPopup(popupContent,{
             closeButton: false,
             minWidth: 320
         });                
-
-        
-        
         markers.addLayer(marker);
     }
-    
     markers.on('clusterclick', function (a) {
     a.layer.spiderfy();
         });
-      
     map.addLayer(markers); 
     map.fitBounds(markers.getBounds()); //set view on the cluster extent 
-    
-    
-    
-    
 </script>
 
 </body>
