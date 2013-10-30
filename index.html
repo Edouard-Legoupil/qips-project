@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="screen.css" />
+  <link href="http://www.unhcr.org/favicon.ico" rel="icon" type="image/x-icon">
+
+<title>UNHCR Community Impact  and Quick Impact Projects in Jordan</title>
+  <script src='js/mapbox.js'></script>
+  <link href='js/mapbox.css' rel='stylesheet' />
+  <!--[if lte IE 8]>
+    <link href='js/mapbox.ie.css' rel='stylesheet'>
+  <![endif]-->
+  <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        html, body, #map {
+            height: 100%;
+        }
+        .overlay {
+            position:absolute; 
+            padding: 6px 8px;
+            font: 14px/16px Arial, Helvetica, sans-serif;
+            color: #223;
+            background-color:rgba(255,255,255,0.8);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border-radius: 5px;
+        }
+        .title {
+            text-align:center;
+            top:10px;
+            right:20%;
+            left:20%;
+        }
+        .footer {
+            bottom:10px;
+            left:10px;
+        }
+        .box {
+            bottom:90px;
+            left:90px;
+        }
+
+    
+  </style>
+</head>
+<body>
+
+
+<script src='js/share.js' type='text/javascript'></script>
+<link rel="stylesheet" href="js/MarkerCluster.css" />
+<link rel="stylesheet" href="js/MarkerCluster.Default.css" />
+<!--[if lte IE 8]>
+  <link rel="stylesheet" href="js/MarkerCluster.Default.ie.css" />
+<![endif]-->
+<script src="js/leaflet.markercluster.js"></script>
+
+
+    <!-- Labelling CSS and JS -->
+    <link rel="stylesheet" href="js/leaflet.label.css" />
+    <script src="js/leaflet.label.js"></script>
+
+<!-- Example data. -->
+<script src="data/level4.js"></script>
+
+<div id='map'></div>
+<div class="overlay title">UNHCR Community Impact  and Quick Impact Projects in Jordan</div>
+    <div class="overlay footer">Quick Impact Projects (<a href="http://www.refworld.org/docid/416bd5a44.html">QIPs</a>) are small-scale, low-cost projects that are planned and
+implemented within a short timeframe.</div>
+    
+
+<script type='text/javascript'>
+    var map = L.mapbox.map('map', 'unhcr.map-zdgpcmtu')
+        /*.setView([31.5, 36.3], 8)*/
+        ;
+
+    /* var markers = new L.MarkerClusterGroup(); */
+    
+    var markers = L.markerClusterGroup({ spiderfyOnMaxZoom: false, showCoverageOnHover: false, zoomToBoundsOnClick: false });
+
+    for (var i = 0; i < addressPoints.length; i++) {
+        var a = addressPoints[i];
+        var title = a[2];
+        var marker = L.marker(new L.LatLng(a[0], a[1]), {
+            icon: L.mapbox.marker.icon({'marker-symbol': 'post', 'marker-color': '0044FF'}),
+            title: title
+        });
+        marker.bindPopup(title);
+        markers.addLayer(marker);
+    }
+    
+    markers.on('clusterclick', function (a) {
+    a.layer.spiderfy();
+        });
+      
+    map.addLayer(markers); 
+    map.fitBounds(markers.getBounds()); //set view on the cluster extent 
+</script>
+
+</body>
+<!-- Piwik -->
+<script type="text/javascript">
+var pkBaseURL = (("https:" == document.location.protocol) ? "https://data.unhcr.org/piwik/" : "http://data.unhcr.org/piwik/");
+document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script type="text/javascript">
+try {
+var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 14);
+piwikTracker.trackPageView();
+piwikTracker.enableLinkTracking();
+} catch( err ) {}
+</script><noscript><p><img src="http://data.unhcr.org/piwik/piwik.php?idsite=14" style="border:0" alt="" /></p></noscript>
+<!-- End Piwik Tracking Code -->
+</html>
