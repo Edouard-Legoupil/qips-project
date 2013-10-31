@@ -138,6 +138,10 @@
         var locality = a[3];
         var sector = a[4];
         var descr = a[5];
+        var year = a[8];
+        var partner = a[9];
+        var benef = a[10];
+        var cost = a[11];
         
         /*,*/
         var marker = L.marker(new L.LatLng(a[0], a[1]), {
@@ -148,11 +152,16 @@
             type: type,
             locality: locality,
             sector: sector,
-            descr: descr
+            descr: descr,
+            year: year,
+            partner: partner,
+            benef: benef,
+            cost: cost
             
             /*,*/
         });
-        var popupContent =  '   <h2>' + sector + ' ' + type + ' in ' + locality + '</h2>'  + descr;
+        var popupContent =  '   <h2>' + sector + ' ' + year + ' ' + type + ' in ' + locality + '</h2>' 
+         + descr + '<br > <b>Partner:</b> ' + partner + '<br > <b>Beneficiaries:</b> ' + benef + '<br> <b>Cost:</b> '+ cost + 'JOD';
 
         marker.bindPopup(popupContent,{
             closeButton: false,
