@@ -109,7 +109,7 @@
 
 <div id='map'></div>
 
-<div class="overlay title"> <h1>Community Impact  and Quick Impact Projects in Jordan </h1> </div>
+<div class="overlay title"> <h2>Community Impact  and Quick Impact Projects in Jordan </h2> </div>
 <div class="overlay footer">
     <table >
         <tr>
@@ -135,8 +135,8 @@
     for (var i = 0; i < addressPoints.length; i++) {
         var a = addressPoints[i];
         var type = a[2];
+        var locality = a[3];
         /*
-        var location = a[3];
         var sector = a[4];
         */
         var marker = L.marker(new L.LatLng(a[0], a[1]), {
@@ -144,19 +144,19 @@
             /*
             marker.setIcon(L.icon(feature.properties.icon));
             */
-            type: type
+            type: type,
+            locality: locality
             /*,
-            location: location,
             sector: sector
             */
         });
-        /*
-        var popupContent =  '   <h2>' + type + '</h2>' + sector ;
+        var popupContent =  '   <h2>' + type + '</h2>' + locality ;
 
         marker.bindPopup(popupContent,{
             closeButton: false,
             minWidth: 320
         }); 
+        /*
         */
         markers.addLayer(marker);
     }
