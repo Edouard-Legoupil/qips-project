@@ -12,10 +12,7 @@
     <link href='js/mapbox.ie.css' rel='stylesheet'>
   <![endif]-->
   
-  
-  <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
-  <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-  <script src="js/csv2geojson.js"></script>
+
   
   <style>
         body {
@@ -56,33 +53,17 @@
         .popup {
             text-align: center;
         }
-        .popup .slideshow {
-            width: 100%;
-        }
-        .popup .slideshow .image {
+
+        .popup  .image {
             display: none;
         }
-        .popup .slideshow .active {
+        .popup  .active {
             display: block;
         }
-        .popup .slideshow img {
+        .popup  .img {
             width: 100%;
         }
-        .popup .slideshow .caption {
-            background: #eee;
-            padding: 8px;
-        }
-        .popup .cycle {
-            height: 30px;
-            margin-top: 5px;
-            padding-top: 5px;
-        }
-        .popup .cycle a.prev {
-            float: left;
-        }
-        .popup .cycle a.next {
-            float: right;
-        }
+
     
   </style>
 </head>
@@ -117,7 +98,7 @@
                 <img  src="img/logounhcr.png">
             </td>
             <td >
-                Quick Impact Projects           (<a href="http://www.refworld.org/docid/416bd5a44.html" target="_blank">QIPs</a>) 
+                Quick Impact Projects  (<a href="http://www.refworld.org/docid/416bd5a44.html" target="_blank">QIPs</a>) 
                 are small, rapidly implemented projects intended to :<ul>
             <li>help create conditions for durable solutions for refugees and returnees through rapid interventions;</li>
             <li>through community participation, provide for small-scale initial rehabilitation and enable communities to take advantage of development opportunities;</li>
@@ -142,13 +123,10 @@
         var partner = a[9];
         var benef = a[10];
         var cost = a[11];
-        
-        /*,*/
+        var ima = a[13];
+
         var marker = L.marker(new L.LatLng(a[0], a[1]), {
             icon: L.mapbox.marker.icon({'marker-symbol': 'star', 'marker-color': '0044FF'}),
-            /*
-            marker.setIcon(L.icon(feature.properties.icon));
-            */
             type: type,
             locality: locality,
             sector: sector,
@@ -156,19 +134,18 @@
             year: year,
             partner: partner,
             benef: benef,
-            cost: cost
-            
-            /*,*/
+            cost: cost,
+            ima: ima
         });
-        var popupContent =  '   <h2>' + sector + ' ' + year + ' ' + type + ' in ' + locality + '</h2>' 
-         + descr + '<br > <b>Partner:</b> ' + partner + '<br > <b>Beneficiaries:</b> ' + benef + '<br> <b>Cost:</b> '+ cost + 'JOD';
+        var popupContent =  '<h2>' + sector + ' ' + year + ' ' + type + ' in ' + locality + '</h2>' 
+         + descr + '<br > <b>Partner:</b> ' + partner + '<br > <b>Beneficiaries:</b> ' + benef +
+          '<br> <b>Cost:</b> '+ cost + 'JOD <br > ' +
+           '<img src="http://www.unhcr.jo/project/data/img/' + ima + '.png" />';
 
         marker.bindPopup(popupContent,{
             closeButton: false,
             minWidth: 320
         }); 
-        /*
-        */
         markers.addLayer(marker);
     }
     markers.on('clusterclick', function (a) {
@@ -185,10 +162,10 @@ var pkBaseURL = (("https:" == document.location.protocol) ? "https://data.unhcr.
 document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
 </script><script type="text/javascript">
 try {
-var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 14);
+var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 19);
 piwikTracker.trackPageView();
 piwikTracker.enableLinkTracking();
 } catch( err ) {}
-</script><noscript><p><img src="http://data.unhcr.org/piwik/piwik.php?idsite=14" style="border:0" alt="" /></p></noscript>
+</script><noscript><p><img src="http://data.unhcr.org/piwik/piwik.php?idsite=19" style="border:0" alt="" /></p></noscript>
 <!-- End Piwik Tracking Code -->
 </html>
