@@ -136,21 +136,23 @@
         var a = addressPoints[i];
         var type = a[2];
         var locality = a[3];
-        /*
         var sector = a[4];
-        */
+        var descr = a[5];
+        
+        /*,*/
         var marker = L.marker(new L.LatLng(a[0], a[1]), {
             icon: L.mapbox.marker.icon({'marker-symbol': 'star', 'marker-color': '0044FF'}),
             /*
             marker.setIcon(L.icon(feature.properties.icon));
             */
             type: type,
-            locality: locality
-            /*,
-            sector: sector
-            */
+            locality: locality,
+            sector: sector,
+            descr: descr
+            
+            /*,*/
         });
-        var popupContent =  '   <h2>' + type + '</h2>' + locality ;
+        var popupContent =  '   <h2>' + sector + ' ' + type + ' in ' + locality + '</h2>'  + descr;
 
         marker.bindPopup(popupContent,{
             closeButton: false,
