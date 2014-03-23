@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />  
+<meta name="author" content="Edouard Legoupil">
+
+<meta property="og:title" content="2014 Refugee Response in Jordan"/>
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="http://data.unhcr.org/jordan/rrp6"/>
+<meta property="og:image" content="http://data.unhcr.org/jordan/rrp6/thumbnail.jpg"/>
+<meta property="og:site_name" content="2014 Refugee Response in Jordan"/>
+<meta property="og:description" content="2014 Refugee Response in Jordan"/>
+<link href="http://www.unhcr.org/favicon.ico" rel="icon" type="image/x-icon">
+<title>UNHCR Community Impact  and Quick Impact Projects in Jordan</title>
+
+
+    
+    <script src="js/jquery-1.6.2.min.js"></script>
+
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+<script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css' rel='stylesheet' />
+  <!--[if lte IE 8]>
+    <link href='js/mapbox.ie.css' rel='stylesheet'>
+  <![endif]-->
+  
+
+  
+  <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        html, body, #map {
+            height: 100%;
+        }
+        .overlay {
+            position:absolute; 
+            padding: 6px 8px;
+            font: 14px/16px Arial, Helvetica, sans-serif;
+            color: #223;
+            background-color:rgba(255,255,255,0.8);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border-radius: 5px;
+        }
+        .title {
+            text-align:center;
+            top:10px;
+            right:20%;
+            left:20%;
+        }
+        .footer {
+            bottom:10px;
+            left:130px;
+        }
+        .box {
+            bottom:90px;
+            left:90px;
+        }
+        .logo-unhcr {
+          bottom:15;
+          left:10;
+          z-index:1;
+        }
+        .popup {
+            text-align: center;
+        }
+
+        .popup  .image {
+            display: none;
+        }
+        .popup  .active {
+            display: block;
+        }
+        .popup  .img {
+            width: 100%;
+        }
+        
+       #map-ui {
+            position: absolute;
+            top: 70px;
+            left: 10px;
+            z-index: 100;
+        }
+
+        #map-ui ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        #map-ui a {
+            font-size: 13px;
+            background: #FFF;
+            color: #3C4E5A;
+            display: block;
+            margin: 0;
+            padding: 0;
+            border: 1px solid #BBB;
+            border-bottom-width: 0;
+            min-width: 138px;
+            padding: 10px;
+            text-decoration: none;
+        }
+
+        #map-ui a:hover {
+            background: #ECF5FA;
+        }
+
+        #map-ui li:last-child a {
+            border-bottom-width: 1px;
+            -webkit-border-radius: 0 0 3px 3px;
+            border-radius: 0 0 3px 3px;
+        }
+
+        #map-ui li:first-child a {
+            -webkit-border-radius: 3px 3px 0 0;
+            border-radius: 3px 3px 0 0;
+        }
+
+        #map-ui a.active {
+            background: #3887BE;
+            border-color: #3887BE;
+            color: #FFF;
+        }
+    
+  </style>
+</head>
+<body>
+
+
+<script src='js/share.js' type='text/javascript'></script>
+<link rel="stylesheet" href="js/MarkerCluster.css" />
+<link rel="stylesheet" href="js/MarkerCluster.Default.css" />
+<!--[if lte IE 8]>
+  <link rel="stylesheet" href="js/MarkerCluster.Default.ie.css" />
+<![endif]-->
+<script src="js/leaflet.markercluster.js"></script>
+
+<!-- Labelling CSS and JS -->
+<link rel="stylesheet" href="js/leaflet.label.css" />
+<script src="js/leaflet.label.js"></script>
+
+<!-- Example data. -->
+<script src="data/level.js"></script>
+
+<!--
+            color: #c00000; /* cash */
+
+            color: #31859c; /* education */
+
+            color: #948a54; /* food */
+
+            color: #43b305; /* health */
+
+            color: #026cb6; /* nfi */
+
+            color: #1f4981; /* protection */
+
+            color: #ffc000; /* shelter */
+
+            color: #8064a2; /* wash */
+-->
+
+
+<div id='map-ui'>
+  <ul id='filters'>
+  </ul>
+</div>
+<div id='map'></div>
+
+<div class="overlay title"> <h2>Community Impact  and Quick Impact Projects in Jordan </h2> </div>
+<div class="overlay footer">
+    <table >
+        <tr>
+            <td>
+                <a href="http://www.unhcr.jo"  target="_blank"/><img  src="img/logounhcr.png"><br ><small>Office in Jordan</small></a>
+            </td>
+            <td >
+                Quick Impact Projects  (<a href="http://www.refworld.org/docid/416bd5a44.html" target="_blank">QIPs</a>) 
+                are small, rapidly implemented projects intended to :<ul>
+            <li>help create conditions for durable solutions for refugees and returnees through rapid interventions;</li>
+            <li>through community participation, provide for small-scale initial rehabilitation and enable communities to take advantage of development opportunities;</li>
+            <li>help strengthen the absorptive capacity of target areas, while meeting urgent community needs.</li>
+            </ul> 
+           </td>
+        </tr>
+    </table>
+</div>
+<script type='text/javascript'>
+    
+
+// I suppose that the json is saved in the var dataJSON --addressPoints
+
+L.MarkerClusterGroup.include({
+    fromGeoJSON: function (geojson) {
+        this._geojson = geojson;
+        this.filter();
+    },
+
+    filter: function (f) {
+        f = f || function (m) { return true; }
+        var markers = Array();
+        
+        
+        for (var i = 0; i < addressPoints.length; i++) {
+            var a = addressPoints[i];
+            var type = a[2];
+            var locality = a[3];
+            var sector = a[4];
+            var descr = a[5];
+            var year = a[8];
+            var partner = a[9];
+            var benef = a[10];
+            var cost = a[11];
+            var ima = a[13];
+
+            var marker = L.marker(new L.LatLng(a[0], a[1]), {
+                icon: L.mapbox.marker.icon({'marker-symbol': 'star', 'marker-color': '0044FF'}),
+                type: type,
+                locality: locality,
+                sector: sector,
+                descr: descr,
+                year: year,
+                partner: partner,
+                benef: benef,
+                cost: cost,
+                ima: ima
+            });
+            marker.bindPopup('<h2>' + sector + ' ' + year + ' ' + type + ' in ' + locality + '</h2>' 
+         + descr + '<br > <b>Partner:</b> ' + partner + '<br > <b>Beneficiaries:</b> ' + benef +
+          '<br> <b>Cost:</b> '+ cost + 'JOD <br > ' +
+           '<img src="http://www.unhcr.jo/project/data/img/' + ima + '.png" />');
+            markers.push(marker);
+        }
+        
+        /*
+        for (var i = 0; i < this._geojson.features.length; i++) {
+            var a = this._geojson.features[i];
+            if (!f(a)) { continue; }
+            var title = a.properties['title'];
+            var description = a.properties['description']
+            var marker = L.marker(new L.LatLng(a.geometry.coordinates[1], a.geometry.coordinates[0]), {
+                icon: L.mapbox.marker.icon({'marker-symbol': a.properties['marker-symbol'], 'marker-color': a.properties['marker-color']}),
+                title: title
+            });
+            marker.bindPopup('<b>'+title+'</b><br>'+description);
+            markers.push(marker);
+        }
+        
+        */
+        this.clearLayers();
+        this.addLayers(markers);
+    }
+});
+
+var map = L.mapbox.map('map', 'unhcr.map-8bkai3wa',  {markerLayer: false});
+map.on('error', function (e) {
+    console.log(e);
+})
+var cluster = new L.MarkerClusterGroup();
+map.addLayer(cluster);
+
+cluster.fromGeoJSON(addressPoints);
+map.addLayer(cluster);
+
+var filter = L.DomUtil.get('filter');
+var food = L.DomUtil.get('filter-Health');
+var test = L.DomUtil.get('filter-WASH');
+var all = L.DomUtil.get('filter-all');
+
+
+
+
+jQuery('.chktax').on('click', function(e) {
+    var allChecked = {};
+    var cat = [];
+    jQuery(".chktax:checked").each(function(i, elem){
+            var name = elem.name;
+            allChecked[name] = allChecked[name] || [];
+            cat = cat || []
+            allChecked[name].push(elem.value);
+            cat.push(elem.value);
+        });
+
+    cluster.filter(function (m) {
+            return superbag(m.properties['sector'], cat);
+        });
+
+});
+
+L.DomEvent.on(all, 'click', function (e) {
+    cluster.filter();
+})
+
+
+function superbag(sup, sub) {
+    sup.sort();
+    sub.sort();
+    var i, j;
+    for (i=0,j=0; i<sup.length && j<sub.length;) {
+        if (sup[i] < sub[j]) {
+            ++i;
+        } else if (sup[i] == sub[j]) {
+            ++i; ++j;
+        } else {
+            return false;
+        }
+    }
+    return j == sub.length;
+}
+</script>
+
+</body>
+
+
+</html>
